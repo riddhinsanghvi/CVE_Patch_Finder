@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VulnShop – Demo Store</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; color: #333; }
+    header { background: #1a1a2e; color: #fff; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
+    header h1 { font-size: 1.6rem; }
+    .badge { background: #e63946; color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .search-bar { display: flex; gap: 8px; margin-bottom: 24px; }
+    .search-bar input, .search-bar select { padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; flex: 1; }
+    .search-bar button { padding: 10px 20px; background: #1a1a2e; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); transition: transform .2s; }
+    .card:hover { transform: translateY(-4px); }
+    .card .emoji { font-size: 3rem; text-align: center; margin-bottom: 12px; }
+    .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .card .price { color: #e63946; font-weight: 700; font-size: 1.2rem; }
+    .card .category { color: #888; font-size: 0.8rem; margin-bottom: 12px; }
+    .card button { width: 100%; padding: 9px; background: #1a1a2e; color: #fff; border: none; border-radius: 6px; cursor: pointer; margin-top: 12px; }
+    .cart-panel { position: fixed; right: 0; top: 0; width: 320px; height: 100vh; background: #fff; box-shadow: -4px 0 20px rgba(0,0,0,.12); padding: 24px; transform: translateX(100%); transition: transform .3s; overflow-y: auto; }
+    .cart-panel.open { transform: translateX(0); }
+    .cart-panel h2 { margin-bottom: 16px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+    .checkout-btn { width: 100%; padding: 12px; background: #2ecc71; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 16px; }
+    #cart-toggle { background: #e63946; border: none; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; position: relative; }
+    #cart-count { background: #fff; color: #e63946; border-radius: 50%; padding: 0 5px; font-size: 0.75rem; font-weight: 700; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: #fff; padding: 12px 24px; border-radius: 8px; display: none; }
+    .vuln-notice { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🛒 VulnShop <span class="badge">DEMO</span></h1>
+  <button id="cart-toggle" onclick="toggleCart()">Cart <span id="cart-count">0</span></button>
+</header>
+
+<div class="container">
+  <div class="vuln-notice">
+    ⚠️ <strong>Security Demo:</strong> This store intentionally uses vulnerable npm packages
+    (lodash 4.17.4, axios 0.18.0, serialize-javascript 1.7.0, etc.) to demonstrate the CVE pipeline.
+  </div>
+
+  <div class="search-bar">
+    <input id="search" type="text" placeholder="Search products…" oninput="filterProducts()"/>
+    <select id="category" onchange="filterProducts()">
+      <option value="">All Categories</option>
+    </select>
+    <button onclick="filterProducts()">Search</button>
+  </div>
+
+  <div class="grid" id="product-grid"></div>
+</div>
+
+<!-- Cart Sidebar -->
+<div class="cart-panel" id="cart-panel">
+  <h2>🛒 Your Cart</h2>
+  <div id="cart-items"></div>
+  <p style="margin-top:12px;font-weight:700">Total: $<span id="cart-total">0.00</span></p>
+  <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  <button style="width:100%;margin-top:8px;padding:10px;border:1px solid #ddd;border-radius:8px;cursor:pointer;background:#fff" onclick="toggleCart()">Close</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let allProducts = [], cart = [];
+
+  async function loadProducts() {
+    const res  = await fetch('/');
+    const data = await res.json();
+    allProducts = data.products;
+    renderCategories(data.categories);
+    renderProducts(allProducts);
+  }
+
+  function renderCategories(cats) {
+    const sel = document.getElementById('category');
+    cats.forEach(c => {
+      const o = document.createElement('option');
+      o.value = c; o.textContent = c;
+      sel.appendChild(o);
+    });
+  }
+
+  function renderProducts(prods) {
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = prods.map(p => `
+      <div class="card">
+        <div class="emoji">${p.image}</div>
+        <h3>${p.name}</h3>
+        <div class="category">${p.category} • ${p.stock} in stock</div>
+        <div class="price">$${p.price.toFixed(2)}</div>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>`).join('');
+  }
+
+  async function filterProducts() {
+    const search   = document.getElementById('search').value;
+    const category = document.getElementById('category').value;
+    const params   = new URLSearchParams();
+    if (search)   params.append('search', search);
+    if (category) params.append('category', category);
+    const res  = await fetch(`/?${params}`);
+    const data = await res.json();
+    renderProducts(data.products);
+  }
+
+  function addToCart(id) {
+    const p = allProducts.find(x => x.id === id);
+    const ex = cart.find(x => x.id === id);
+    if (ex) ex.quantity++;
+    else cart.push({ ...p, quantity: 1 });
+    updateCart();
+    showToast(`${p.name} added to cart!`);
+  }
+
+  function updateCart() {
+    document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.quantity, 0);
+    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+    document.getElementById('cart-items').innerHTML = cart.map(i => `
+      <div class="cart-item">
+        <span>${i.image} ${i.name} × ${i.quantity}</span>
+        <strong>$${(i.price * i.quantity).toFixed(2)}</strong>
+      </div>`).join('') || '<p style="color:#aaa">Cart is empty</p>';
+  }
+
+  function toggleCart() {
+    document.getElementById('cart-panel').classList.toggle('open');
+  }
+
+  async function checkout() {
+    if (!cart.length) return showToast('Cart is empty!');
+    showToast('✅ Order placed successfully! (Demo)');
+    cart = []; updateCart(); toggleCart();
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 2500);
+  }
+
+  loadProducts();
+</script>
+</body>
+</html>

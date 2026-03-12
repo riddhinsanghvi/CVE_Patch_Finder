@@ -1,0 +1,26 @@
+{
+  "name": "vuln-shop",
+  "version": "1.0.0",
+  "description": "A demo shopping website with intentionally vulnerable dependencies",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "express": "4.16.0",
+    "lodash": "4.17.4",
+    "axios": "0.18.0",
+    "serialize-javascript": "1.7.0",
+    "node-fetch": "2.6.0",
+    "minimist": "1.2.0",
+    "ejs": "5.0.1",
+    "body-parser": "1.18.0",
+    "jsonwebtoken": "8.3.0",
+    "bcrypt": "5.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.0.0"
+  }
+}
