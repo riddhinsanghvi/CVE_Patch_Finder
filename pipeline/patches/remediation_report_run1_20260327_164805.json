@@ -1,0 +1,217 @@
+{
+  "run": 1,
+  "timestamp": "2026-03-27 16:48:05.614057",
+  "report_file": "C:\\Users\\riddh\\OneDrive\\Documents\\CVE_Patch_Finder\\pipeline\\reports\\Snyk.json",
+  "assessments": [
+    {
+      "package": "axios",
+      "installed": "0.18.0",
+      "latest_safe": "1.13.5",
+      "npm_latest": "1.14.0",
+      "is_latest": false,
+      "is_transitive": false,
+      "confidence": 70,
+      "label": "REVIEW",
+      "cves": [
+        "CVE-2026-25639",
+        "CVE-2021-3749",
+        "CVE-2023-45857"
+      ],
+      "title": "Prototype Pollution",
+      "action": "Check changelog then upgrade to 1.13.5",
+      "patch_available": true,
+      "cvss_score": 7.5,
+      "nvd_description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to versions 0.30.3 and 1.13.5, the mergeConfig function in axios crashes with a TypeError when processing configuration objects containing __proto__ as an own property. An attacker can trigger this by providing a malicious configuration object created via JSON.parse(), causing complete denial of service. This vulnerability is fixed in versions 0.30.3 and 1.13.5.",
+      "nvd_references": [
+        "https://github.com/axios/axios/commit/28c721588c7a77e7503d0a434e016f852c597b57",
+        "https://github.com/axios/axios/commit/d7ff1409c68168d3057fc3891f911b2b92616f9e",
+        "https://github.com/axios/axios/pull/7369",
+        "https://github.com/axios/axios/pull/7388",
+        "https://github.com/axios/axios/releases/tag/v0.30.3"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    },
+    {
+      "package": "body-parser",
+      "installed": "1.18.0",
+      "latest_safe": "2.2.2",
+      "npm_latest": "2.2.2",
+      "is_latest": true,
+      "is_transitive": false,
+      "confidence": 70,
+      "label": "REVIEW",
+      "cves": [
+        "CVE-2024-45590",
+        "CVE-2024-45590"
+      ],
+      "title": "Asymmetric Resource Consumption (Amplification)",
+      "action": "Check changelog then upgrade to 2.2.2",
+      "patch_available": true,
+      "cvss_score": 7.5,
+      "nvd_description": "body-parser is Node.js body parsing middleware. body-parser <1.20.3 is vulnerable to denial of service when url encoding is enabled. A malicious actor using a specially crafted payload could flood the server with a large number of requests, resulting in denial of service. This issue is patched in 1.20.3.",
+      "nvd_references": [
+        "https://github.com/expressjs/body-parser/commit/b2695c4450f06ba3b0ccf48d872a229bb41c9bce",
+        "https://github.com/expressjs/body-parser/security/advisories/GHSA-qwcr-r2fm-qrc7"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    },
+    {
+      "package": "brace-expansion",
+      "installed": "1.1.12",
+      "latest_safe": "5.0.5",
+      "npm_latest": "5.0.5",
+      "is_latest": true,
+      "is_transitive": true,
+      "confidence": 50,
+      "label": "REVIEW",
+      "cves": [
+        "CVE-2026-33750",
+        "CVE-2026-33750"
+      ],
+      "title": "Infinite loop",
+      "action": "Check changelog then upgrade to 5.0.5",
+      "patch_available": true,
+      "cvss_score": 6.5,
+      "nvd_description": "The brace-expansion library generates arbitrary strings containing a common prefix and suffix. Prior to versions 5.0.5, 3.0.2, 2.0.3, and 1.1.13, a brace pattern with a zero step value (e.g., `{1..2..0}`) causes the sequence generation loop to run indefinitely, making the process hang for seconds and allocate heaps of memory. Versions 5.0.5, 3.0.2, 2.0.3, and 1.1.13 fix the issue. As a workaround, sanitize strings passed to `expand()` to ensure a step value of `0` is not used.",
+      "nvd_references": [
+        "https://github.com/juliangruber/brace-expansion/blob/daa71bcb4a30a2df9bcb7f7b8daaf2ab30e5794a/src/index.ts#L107-L113",
+        "https://github.com/juliangruber/brace-expansion/blob/daa71bcb4a30a2df9bcb7f7b8daaf2ab30e5794a/src/index.ts#L184",
+        "https://github.com/juliangruber/brace-expansion/commit/311ac0d54994158c0a384e286a7d6cbb17ee8ed5",
+        "https://github.com/juliangruber/brace-expansion/commit/7fd684f89fdde3549563d0a6522226a9189472a2",
+        "https://github.com/juliangruber/brace-expansion/commit/b9cacd9e55e7a1fa588fe4b7bb1159d52f1d902a"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    },
+    {
+      "package": "lodash",
+      "installed": "4.17.4",
+      "latest_safe": "4.17.21",
+      "npm_latest": "4.17.23",
+      "is_latest": false,
+      "is_transitive": false,
+      "confidence": 70,
+      "label": "REVIEW",
+      "cves": [
+        "CVE-2021-23337",
+        "CVE-2019-10744",
+        "CVE-2020-8203",
+        "SNYK-JS-LODASH-608086",
+        "SNYK-JS-LODASH-6139239",
+        "CVE-2018-16487"
+      ],
+      "title": "Code Injection",
+      "action": "Check changelog then upgrade to 4.17.21",
+      "patch_available": true,
+      "cvss_score": 7.2,
+      "nvd_description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
+      "nvd_references": [
+        "https://cert-portal.siemens.com/productcert/pdf/ssa-637483.pdf",
+        "https://github.com/lodash/lodash/blob/ddfd9b11a0126db2302cb70ec9973b66baec0975/lodash.js%23L14851",
+        "https://security.netapp.com/advisory/ntap-20210312-0006/",
+        "https://snyk.io/vuln/SNYK-JAVA-ORGFUJIONWEBJARS-1074932",
+        "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARS-1074930"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    },
+    {
+      "package": "qs",
+      "installed": "6.5.0",
+      "latest_safe": "6.15.0",
+      "npm_latest": "6.15.0",
+      "is_latest": true,
+      "is_transitive": true,
+      "confidence": 30,
+      "label": "MANUAL",
+      "cves": [
+        "CVE-2025-15284",
+        "CVE-2022-24999",
+        "CVE-2025-15284",
+        "CVE-2022-24999",
+        "CVE-2025-15284",
+        "CVE-2022-24999"
+      ],
+      "title": "Allocation of Resources Without Limits or Throttling",
+      "action": "Manual review needed",
+      "patch_available": true,
+      "cvss_score": 3.7,
+      "nvd_description": "Improper Input Validation vulnerability in qs (parse modules) allows HTTP DoS.This issue affects qs: < 6.14.1.\n\n\nSummary\n\nThe arrayLimit\u00a0option in qs did not enforce limits for bracket notation (a[]=1&a[]=2), only for indexed notation (a[0]=1). This is a consistency bug; arrayLimit\u00a0should apply uniformly across all array notations.\n\nNote:\u00a0The default parameterLimit\u00a0of 1000 effectively mitigates the DoS scenario originally described. With default options, bracket notation cannot produce arrays larger than parameterLimit\u00a0regardless of arrayLimit, because each a[]=valueconsumes one parameter slot. The severity has been reduced accordingly.\n\nDetails\n\nThe arrayLimit\u00a0option only checked limits for indexed notation (a[0]=1&a[1]=2) but did not enforce it for bracket notation (a[]=1&a[]=2).\n\nVulnerable code\u00a0(lib/parse.js:159-162):\n\nif (root === '[]' && options.parseArrays) {\n    obj = utils.combine([], leaf);  // No arrayLimit check\n}\n\n\n\n\n\nWorking code\u00a0(lib/parse.js:175):\n\nelse if (index <= options.arrayLimit) {  // Limit checked here\n    obj = [];\n    obj[index] = leaf;\n}\n\n\n\n\n\nThe bracket notation handler at line 159 uses utils.combine([], leaf)\u00a0without validating against options.arrayLimit, while indexed notation at line 175 checks index <= options.arrayLimit\u00a0before creating arrays.\n\n\n\nPoC\n\nconst qs = require('qs');\nconst result = qs.parse('a[]=1&a[]=2&a[]=3&a[]=4&a[]=5&a[]=6', { arrayLimit: 5 });\nconsole.log(result.a.length);  // Output: 6 (should be max 5)\n\n\n\n\n\nNote on parameterLimit interaction:\u00a0The original advisory's \"DoS demonstration\" claimed a length of 10,000, but parameterLimit\u00a0(default: 1000) caps parsing to 1,000 parameters. With default options, the actual output is 1,000, not 10,000.\n\nImpact\n\nConsistency bug in arrayLimit\u00a0enforcement. With default parameterLimit, the practical DoS risk is negligible since parameterLimit\u00a0already caps the total number of parsed parameters (and thus array elements from bracket notation). The risk increases only when parameterLimit\u00a0is explicitly set to a very high value.",
+      "nvd_references": [
+        "https://github.com/ljharb/qs/commit/3086902ecf7f088d0d1803887643ac6c03d415b9",
+        "https://github.com/ljharb/qs/security/advisories/GHSA-6rw7-vpxm-498p"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    },
+    {
+      "package": "serialize-javascript",
+      "installed": "1.7.0",
+      "latest_safe": "7.0.5",
+      "npm_latest": "7.0.5",
+      "is_latest": true,
+      "is_transitive": false,
+      "confidence": 30,
+      "label": "MANUAL",
+      "cves": [
+        "CVE-2019-16772",
+        "CVE-2020-7660",
+        "CVE-2019-16769"
+      ],
+      "title": "Cross-site Scripting (XSS)",
+      "action": "Manual review needed",
+      "patch_available": true,
+      "cvss_score": 3.1,
+      "nvd_description": "The serialize-to-js NPM package before version 3.0.1 is vulnerable to Cross-site Scripting (XSS). It does not properly mitigate against unsafe characters in serialized regular expressions. This vulnerability is not affected on Node.js environment since Node.js's implementation of RegExp.prototype.toString() backslash-escapes all forward slashes in regular expressions. If serialized data of regular expression objects are used in an environment other than Node.js, it is affected by this vulnerability.",
+      "nvd_references": [
+        "https://github.com/commenthol/serialize-to-js/commit/181d7d583ae5293cd47cc99b14ad13352875f3e3",
+        "https://github.com/commenthol/serialize-to-js/security/advisories/GHSA-3fjq-93xj-3f3f",
+        "https://github.com/commenthol/serialize-to-js/commit/181d7d583ae5293cd47cc99b14ad13352875f3e3",
+        "https://github.com/commenthol/serialize-to-js/security/advisories/GHSA-3fjq-93xj-3f3f"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    },
+    {
+      "package": "tar",
+      "installed": "4.4.19",
+      "latest_safe": "7.5.11",
+      "npm_latest": "7.5.13",
+      "is_latest": false,
+      "is_transitive": true,
+      "confidence": 70,
+      "label": "REVIEW",
+      "cves": [
+        "CVE-2026-26960",
+        "CVE-2026-29786",
+        "CVE-2026-31802"
+      ],
+      "title": "Directory Traversal",
+      "action": "Check changelog then upgrade to 7.5.11",
+      "patch_available": true,
+      "cvss_score": 7.1,
+      "nvd_description": "node-tar is a full-featured Tar for Node.js. When using default options in versions 7.5.7 and below, an attacker-controlled archive can create a hardlink inside the extraction directory that points to a file outside the extraction root, enabling arbitrary file read and write as the extracting user. Severity is high because the primitive bypasses path protections and turns archive extraction into a direct filesystem access primitive. This issue has been fixed in version 7.5.8.",
+      "nvd_references": [
+        "https://github.com/isaacs/node-tar/commit/2cb1120bcefe28d7ecc719b41441ade59c52e384",
+        "https://github.com/isaacs/node-tar/commit/d18e4e1f846f4ddddc153b0f536a19c050e7499f",
+        "https://github.com/isaacs/node-tar/security/advisories/GHSA-83g3-92jg-28cx"
+      ],
+      "deprecated": false,
+      "deprecation_msg": ""
+    }
+  ],
+  "patches_applied": [],
+  "patches_review": [
+    "axios: 0.18.0 -> 1.13.5",
+    "body-parser: 1.18.0 -> 2.2.2",
+    "brace-expansion: 1.1.12 -> 5.0.5",
+    "lodash: 4.17.4 -> 4.17.21",
+    "tar: 4.4.19 -> 7.5.11"
+  ],
+  "patches_manual": [
+    "qs: 6.5.0 -> 6.15.0",
+    "serialize-javascript: 1.7.0 -> 7.0.5"
+  ]
+}
